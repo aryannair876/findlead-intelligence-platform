@@ -1,0 +1,313 @@
+# FindLead Intelligence Platform - Optimized Tasks Configuration
+
+# Email Domain Health Monitor Tasks
+domain_infrastructure_validation:
+  description: >
+    Perform comprehensive technical validation of the email domain: {email_domain}
+    
+    Execute the following validation sequence:
+    1. SYNTAX VALIDATION: Verify email format compliance with RFC 5322 standards
+    2. DNS RESOLUTION: Confirm domain exists and resolves properly
+    3. MX RECORD ANALYSIS: Identify all mail exchange records, priorities, and configurations
+    4. SMTP CONNECTIVITY: Test SMTP server availability and response
+    5. CATCH-ALL DETECTION: Determine if domain accepts all email addresses
+    6. DISPOSABLE EMAIL CHECK: Verify against known temporary email providers
+    7. ROLE-BASED EMAIL IDENTIFICATION: Detect generic addresses (admin@, support@, etc.)
+    
+    For each validation point, provide:
+    - Status: PASS/FAIL/WARNING
+    - Technical details and error messages if applicable  
+    - Impact assessment on deliverability
+    - Confidence score (0-100) for each check
+    
+    Focus on identifying technical barriers to email delivery and quantifying risks.
+  expected_output: >
+    A structured technical validation report containing:
+    - Overall domain health score (0-100)
+    - Detailed results for each validation layer
+    - Technical risk factors identified
+    - Infrastructure recommendations for improvement
+    - Confidence intervals for all assessments
+  agent: domain_health_validator
+  output_file: "domain_validation_report.json"
+
+reputation_intelligence_analysis:
+  description: >
+    Conduct comprehensive reputation analysis for domain: {email_domain}
+    
+    Analyze reputation signals across multiple dimensions:
+    1. BLACKLIST STATUS: Check 50+ major blacklist databases (Spamhaus, SURBL, etc.)
+    2. SENDER SCORE ANALYSIS: Retrieve and interpret sender reputation metrics
+    3. HISTORICAL REPUTATION: Analyze reputation trends and patterns
+    4. COMPETITIVE BENCHMARKING: Compare against industry reputation standards
+    5. ESP RELATIONSHIP ASSESSMENT: Evaluate standing with major email providers
+    6. AUTHENTICATION PROTOCOL STATUS: Check SPF, DKIM, DMARC implementation
+    
+    For reputation analysis, provide:
+    - Current reputation score and percentile ranking
+    - Blacklist presence and severity assessment
+    - Authentication protocol compliance status
+    - Historical reputation trend analysis (if available)
+    - Risk probability calculations for major ESPs
+  expected_output: >
+    A comprehensive reputation intelligence report including:
+    - Reputation risk score (0-100, where 0 is highest risk)
+    - Blacklist status summary with severity ratings
+    - Authentication protocol compliance assessment
+    - ESP-specific deliverability predictions
+    - Reputation improvement roadmap with priority actions
+  agent: reputation_intelligence_agent  
+  context: [domain_infrastructure_validation]
+  output_file: "reputation_analysis_report.json"
+
+strategic_risk_assessment:  
+  description: >
+    Synthesize technical and reputation data for domain: {email_domain} into strategic 
+    business recommendations and risk management guidance.
+    
+    Provide comprehensive risk assessment covering:
+    1. OVERALL RISK CLASSIFICATION: Categorize as LOW/MEDIUM/HIGH/CRITICAL risk
+    2. BUSINESS IMPACT ANALYSIS: Quantify potential effects on campaign performance
+    3. DELIVERABILITY PREDICTIONS: Forecast inbox placement rates by ESP
+    4. MITIGATION STRATEGIES: Prioritized action plan for risk reduction
+    5. MONITORING RECOMMENDATIONS: Ongoing surveillance requirements
+    6. ALTERNATIVE STRATEGIES: Backup plans if primary domain is compromised
+    
+    Consider business context:
+    - Campaign volume and frequency requirements
+    - Audience composition and ESP distribution
+    - Risk tolerance levels
+    - Timeline constraints for improvements
+  expected_output: >
+    An executive-ready strategic assessment containing:
+    - Risk classification with confidence intervals
+    - Business impact quantification (bounce rates, delivery rates)  
+    - Prioritized 30/60/90-day action plan
+    - ROI projections for recommended improvements
+    - Alternative domain strategies if needed
+    - Monitoring and maintenance recommendations
+  agent: deliverability_risk_assessor
+  context: [domain_infrastructure_validation, reputation_intelligence_analysis]
+  output_file: "strategic_risk_assessment.json"
+
+# Lead Response Sentiment Tasks
+emotional_context_analysis:
+  description: >
+    Perform BUSINESS SENTIMENT analysis of the prospect communication: {email_content}
+    
+    CRITICAL: Analyze BUSINESS SENTIMENT, not emotional tone. Focus on buying likelihood:
+    
+    BUSINESS SENTIMENT RULES:
+    - POSITIVE: Customer shows buying intent (wants demo, has budget, seeks solution, ready to purchase)
+    - NEGATIVE: Customer not interested (found alternative, no budget, rejecting offers)  
+    - NEUTRAL: Just gathering information, no clear buying signals
+    
+    IMPORTANT EXAMPLES:
+    - "Frustrated with current system, budget approved, need demo ASAP" = POSITIVE (high buying intent)
+    - "Just curious about your features" = NEUTRAL (information gathering)
+    - "Found another solution, not interested" = NEGATIVE (no buying intent)
+    
+    Analyze these business dimensions:
+    1. BUSINESS SENTIMENT: positive/negative/neutral based on BUYING LIKELIHOOD
+    2. BUYING INTENT SCORE: 0-100 likelihood of making a purchase
+    3. URGENCY LEVEL: 0-100 time sensitivity of their need
+    4. BUDGET READINESS: Indicators of budget approval/availability
+    5. DECISION STAGE: Research, evaluation, or purchase-ready phase
+    6. PAIN POINTS: Problems they're trying to solve (drives buying intent)
+    7. SOLUTION SEEKING: Active vs passive interest in solutions
+    
+    For each dimension, provide supporting evidence from the text.
+  expected_output: >
+    Return a valid JSON object with this exact structure:
+    {
+      "business_sentiment": "positive|negative|neutral",
+      "sentiment_score": -1.0 to 1.0 (business positive to negative),
+      "buying_intent": 0-100,
+      "urgency_level": 0-100,
+      "budget_readiness": 0-100,
+      "decision_stage": "research|evaluation|purchase-ready",
+      "pain_points": ["current system issues", "productivity loss"],
+      "solution_seeking": "active|passive",
+      "key_evidence": ["budget approved", "need demo", "ASAP"],
+      "business_context": "explanation of why this sentiment was chosen"
+    }
+  agent: emotional_intelligence_analyzer
+  output_file: "emotional_analysis_report.json"
+
+buyer_intent_detection:
+  description: >
+    Analyze prospect communication: {email_content} to identify purchase intent signals 
+    and buying journey progression indicators.
+    
+    Focus on detecting:
+    1. URGENCY SIGNALS: Time-sensitive language, deadline mentions, immediate need indicators
+    2. BUDGET DISCUSSIONS: Pricing inquiries, budget timeline references, cost considerations
+    3. DECISION MAKER INVOLVEMENT: Authority indicators, team mentions, approval processes  
+    4. COMPETITIVE EVALUATION: Alternative solution mentions, comparison requests
+    5. TECHNICAL REQUIREMENTS: Specific feature needs, integration requirements, use cases
+    6. IMPLEMENTATION TIMELINE: Project start dates, rollout schedules, milestone references
+    7. STAKEHOLDER DYNAMICS: Team size, department involvement, approval hierarchies
+    8. RESEARCH VS. PURCHASE PHASE: Information-seeking vs. solution-ready language patterns
+    
+    For each intent category, assess:
+    - Presence likelihood (0-100%)
+    - Supporting textual evidence
+    - Stage in buying cycle (awareness, consideration, decision, purchase)
+    - Urgency level and timeline implications
+  expected_output: >
+    Return a valid JSON object with this exact structure:
+    {
+      "buying_intent": "high|medium|low",
+      "urgency_level": 85,
+      "timeline": "immediate|weeks|months",
+      "budget_signals": "present|mentioned|none",
+      "decision_stage": "research|evaluation|decision|purchase",
+      "stakeholder_involvement": "individual|team|executive",
+      "competitive_context": "evaluation|comparison|none",
+      "next_steps": ["specific", "actions", "to", "take"],
+      "intent_probability": 0.75
+    }
+  agent: buyer_intent_detector
+  context: [emotional_context_analysis]
+  output_file: "buyer_intent_report.json"
+
+response_strategy_optimization:
+  description: >
+    Create strategic response recommendations based on emotional profile and buyer intent 
+    analysis for prospect: {prospect_name} with communication: {email_content}
+    
+    Develop comprehensive response strategy addressing:
+    1. OPTIMAL RESPONSE TIMING: When to respond for maximum impact
+    2. COMMUNICATION TONE: Match emotional state and communication style preferences  
+    3. CONTENT STRATEGY: Key topics to address, information to provide
+    4. ENGAGEMENT SEQUENCE: Multi-touch follow-up strategy and cadence
+    5. CHANNEL OPTIMIZATION: Best communication method (email, phone, video, in-person)
+    6. PERSONALIZATION ELEMENTS: Specific personal touches and reference points
+    7. OBJECTION ANTICIPATION: Likely concerns and preemptive response strategies
+    8. VALUE PROPOSITION ALIGNMENT: Features/benefits most relevant to current state
+    
+    Consider factors from analysis including:
+    - Urgency level and timeline sensitivity
+    - Communication style preferences
+    - Competitive context and positioning needs
+    
+    Provide specific, actionable recommendations with implementation guidance.
+  expected_output: >
+    Return a valid JSON object with this exact structure:
+    {
+      "priority": "high|medium|low",
+      "response_timing": "immediate|within_hours|within_days",
+      "communication_tone": "formal|professional|casual|enthusiastic",
+      "key_topics": ["topic1", "topic2", "topic3"],
+      "engagement_strategy": "specific strategy description",
+      "objection_handling": ["potential objection 1", "response strategy"],
+      "follow_up_sequence": ["action 1", "action 2", "action 3"],
+      "success_probability": 0.80,
+      "recommendations": "specific actionable recommendations"
+    }
+  agent: response_strategy_optimizer
+  context: [emotional_context_analysis, buyer_intent_detection]
+  output_file: "response_strategy_playbook.json"
+
+# Website Change Detection Tasks
+comprehensive_change_detection:
+  description: >
+    Monitor and analyze website changes for: {target_website} with focus on detecting 
+    strategically relevant modifications across multiple dimensions.
+    
+    Execute multi-layer change detection:
+    1. VISUAL COMPARISON: Screenshot analysis for layout, design, and visual element changes
+    2. CONTENT ANALYSIS: Text content additions, deletions, and modifications
+    3. STRUCTURAL CHANGES: HTML/CSS code modifications, new pages, removed sections  
+    4. METADATA UPDATES: Title tags, meta descriptions, schema markup changes
+    5. TECHNOLOGY STACK: New integrations, tracking codes, third-party services
+    6. NAVIGATION MODIFICATIONS: Menu changes, link structure, user flow alterations
+    7. FORM UPDATES: Contact forms, lead capture modifications, CTA changes
+    8. MEDIA ASSETS: New images, videos, documents, download links
+    
+    For each change category, document:
+    - Change timestamp and detection confidence
+    - Before/after comparison details
+    - Severity classification (minor, moderate, major, critical)
+    - Business impact potential assessment
+    - Change frequency patterns
+    
+    Filter out insignificant changes (timestamps, cookie banners, minor formatting).
+  expected_output: >
+    A comprehensive change detection report including:
+    - Change summary with severity classifications
+    - Visual comparison screenshots with highlighted differences  
+    - Content modification details with before/after text
+    - Technical infrastructure change analysis
+    - Change frequency trends and patterns
+    - Filtered list of strategically relevant modifications only
+  agent: web_monitoring_specialist
+  output_file: "change_detection_report.json"
+
+strategic_intelligence_analysis:
+  description: >
+    Transform detected changes for {target_website} into strategic business intelligence 
+    and competitive insights.
+    
+    Analyze changes through business strategy lens:
+    1. PRODUCT STRATEGY SIGNALS: New product pages, feature announcements, roadmap hints
+    2. PRICING INTELLIGENCE: Price changes, new plans, promotional offers, discount patterns
+    3. MARKET POSITIONING: Messaging changes, value proposition updates, competitive positioning
+    4. ORGANIZATIONAL CHANGES: Team pages, leadership updates, office locations, hiring signals  
+    5. PARTNERSHIP INDICATORS: New logos, integration announcements, vendor relationships
+    6. TECHNOLOGY ADOPTION: New tools, platforms, infrastructure changes
+    7. MARKETING STRATEGY: Campaign launches, content strategy shifts, SEO changes
+    8. CUSTOMER EXPERIENCE: UX improvements, conversion optimization, user journey changes
+    
+    For each strategic category, assess:
+    - Business implication significance (high, medium, low)
+    - Competitive threat or opportunity level
+    - Timeline implications and urgency
+    - Resource investment indicators
+    - Market trend alignment
+  expected_output: >
+    A strategic intelligence briefing containing:
+    - Executive summary of key strategic changes
+    - Competitive threat assessment with priority rankings
+    - Market opportunity identification  
+    - Business strategy implications and predictions
+    - Resource allocation insights (budget, personnel, focus areas)
+    - Timeline analysis and trend pattern identification
+  agent: competitive_intelligence_analyst
+  context: [comprehensive_change_detection]
+  output_file: "strategic_intelligence_briefing.json"
+
+action_strategy_development:
+  description: >
+    Create specific, prioritized action recommendations based on competitive intelligence 
+    analysis for {target_website} changes.
+    
+    Develop comprehensive response strategy including:
+    1. IMMEDIATE ACTIONS (24-48 hours): Urgent responses to critical competitive moves
+    2. SHORT-TERM INITIATIVES (1-4 weeks): Tactical responses and opportunity captures  
+    3. MEDIUM-TERM STRATEGIES (1-3 months): Strategic positioning and product adjustments
+    4. LONG-TERM PLANNING (3-12 months): Competitive advantage development
+    5. MONITORING ESCALATION: Enhanced surveillance for follow-up changes
+    6. RESOURCE ALLOCATION: Team assignments, budget requirements, timeline estimates
+    7. SUCCESS METRICS: KPIs to measure response effectiveness
+    8. CONTINGENCY PLANNING: Alternative strategies for different scenario outcomes
+    
+    Consider factors:
+    - Your organization's competitive positioning and capabilities
+    - Resource constraints and priority tradeoffs  
+    - Market timing and window of opportunity
+    - Risk tolerance and potential downside protection
+    - Customer impact and experience considerations
+  expected_output: >
+    A comprehensive action strategy playbook including:
+    - Prioritized action matrix with timelines and resource requirements
+    - Specific task assignments and responsibility mapping
+    - Budget estimates and ROI projections for key initiatives  
+    - Risk assessment and mitigation strategies
+    - Success metrics and tracking recommendations
+    - Communication plan for internal stakeholder alignment
+    - Escalation procedures for critical competitive moves
+    - Follow-up monitoring and strategy adjustment protocols
+  agent: strategic_response_coordinator  
+  context: [comprehensive_change_detection, strategic_intelligence_analysis]
+  output_file: "competitive_action_strategy.json"

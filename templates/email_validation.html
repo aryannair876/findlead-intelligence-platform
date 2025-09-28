@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📧 Email Security - FindLead Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        :root {
+            --primary-color: #764ba2; --secondary-color: #667eea;
+            --primary-gradient: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08); --card-bg: rgba(30, 41, 59, 0.75);
+            --text-primary: #f8fafc; --text-secondary: rgba(248, 250, 252, 0.8); --text-muted: rgba(248, 250, 252, 0.65);
+            --success: #10b981; --danger: #ef4444; --info: #3b82f6;
+            --border-color: rgba(255, 255, 255, 0.15); --shadow-lg: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+            --border-radius-lg: 24px; --border-radius-md: 16px;
+        }
+        body { background-color: #111827; background-image: var(--primary-gradient); min-height: 100vh; font-family: 'Inter', system-ui, sans-serif; color: var(--text-primary); }
+        .navbar { background: rgba(0, 0, 0, 0.2) !important; backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color); }
+        .glass-card { background: var(--glass-bg); backdrop-filter: blur(20px); border-radius: var(--border-radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-lg); transition: all 0.3s ease; }
+        .glass-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4); border-color: rgba(255, 255, 255, 0.25); }
+        .page-header { background: var(--card-bg); border-radius: var(--border-radius-lg); padding: 3rem; }
+        .page-header .icon { font-size: 3.5rem; margin-bottom: 1rem; color: var(--secondary-color); filter: drop-shadow(0 0 15px var(--secondary-color)); }
+        .btn-primary { background: var(--primary-gradient); border: none; border-radius: 50px; padding: 12px 30px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4); }
+        .form-label { color: var(--text-secondary); font-weight: 500; }
+        .form-control, .form-select { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-primary); padding: 12px 16px; transition: all 0.3s ease; }
+        .form-control:focus, .form-select:focus { background: rgba(255, 255, 255, 0.1); border-color: var(--secondary-color); box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2); color: var(--text-primary); }
+        .form-control::placeholder { color: var(--text-muted); }
+        h1, .h1, h2, .h2, h3, .h3, h4, .h4 { font-weight: 700; }
+        .loading-spinner { border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top: 2px solid var(--secondary-color); width: 20px; height: 20px; animation: spin 1s linear infinite; display: inline-block; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" href="/"><i class="fas fa-robot me-2"></i> FindLead Dashboard</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">🏠 Dashboard</a>
+                <a class="nav-link" href="/sentiment">😊 Sentiment Analysis</a>
+                <a class="nav-link active" href="/email-validation">📧 Email Security</a>
+                <a class="nav-link" href="/website-monitoring">🌐 Website Monitoring</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-10">
+                <div class="page-header text-center">
+                    <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                    <h1 class="display-4 fw-bold mb-3">Email Security Validation</h1>
+                    <p class="lead text-light mb-4">Advanced Threat Detection & Analysis with FindLead Agents</p>
+                    <div class="glass-card p-4 mt-4">
+                        <h4><i class="fas fa-info-circle me-2"></i>What This Does (In Simple Terms)</h4>
+                        <p class="text-light mb-3">
+                            Like having a cybersecurity expert check every suspicious email for you. Our AI analyzes if an email is safe to trust or potentially dangerous.
+                            Perfect for checking those "urgent" bank emails or suspicious business offers.
+                        </p>
+                        <div class="row text-center">
+                            <div class="col-md-3">
+                                <h6 class="text-success"><i class="fas fa-check-shield me-1"></i> Legitimacy Check</h6>
+                                <small>Real vs Fake Sender</small>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="text-info"><i class="fas fa-globe me-1"></i> Domain Analysis</h6>
+                                <small>Trustworthy vs Suspicious</small>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="text-warning"><i class="fas fa-exclamation-triangle me-1"></i> Threat Detection</h6>
+                                <small>Phishing, Spam, Malware</small>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="text-danger"><i class="fas fa-chart-bar me-1"></i> Risk Score</h6>
+                                <small>0-100 Safety Rating</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="glass-card p-4 p-md-5">
+                    <form id="securityForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-4"><label for="senderEmail" class="form-label"><i class="fas fa-at me-2"></i>Sender Email</label><input type="email" class="form-control" id="senderEmail" placeholder="sender@domain.com" required></div>
+                            <div class="col-md-6 mb-4"><label for="senderDomain" class="form-label"><i class="fas fa-globe me-2"></i>Sender Domain</label><input type="text" class="form-control" id="senderDomain" placeholder="domain.com"></div>
+                        </div>
+                        <div class="mb-4"><label for="emailSubject" class="form-label"><i class="fas fa-heading me-2"></i>Email Subject</label><input type="text" class="form-control" id="emailSubject" placeholder="e.g., Urgent: Action Required" required></div>
+                        <div class="mb-4"><label for="emailContent" class="form-label"><i class="fas fa-file-alt me-2"></i>Email Content</label><textarea class="form-control" id="emailContent" rows="7" placeholder="Paste the full email content here..." required></textarea></div>
+                        <div class="text-center"><button type="submit" class="btn btn-primary btn-lg w-100"><i class="fas fa-user-shield me-2"></i>Analyze Security</button></div>
+                    </form>
+                    <div id="resultCard" class="mt-5" style="display: none;"><h3 class="text-center mb-4"><i class="fas fa-search-plus me-2"></i>Security Analysis Results</h3><div class="glass-card p-4" id="analysisResults"></div></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Examples Section - Always Visible -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-10">
+                <div class="glass-card p-4">
+                    <h3 class="text-center mb-4"><i class="fas fa-lightbulb me-2"></i>Try This Example</h3>
+                    <div class="glass-card p-3" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3);">
+                        <h5 class="text-danger mb-2"><i class="fas fa-lightbulb me-2"></i>Example Suspicious Email to Try:</h5>
+                        <p class="text-light mb-1"><strong>From:</strong> security@paypaI.com (notice the capital 'i' instead of 'l')</p>
+                        <p class="text-light mb-1"><strong>Subject:</strong> "URGENT: Your account will be suspended in 24 hours"</p>
+                        <p class="text-light small mb-0"><strong>Content:</strong> "Dear customer, we detected suspicious activity. Click here immediately to verify your account or it will be permanently suspended."</p>
+                        <small class="text-danger mt-2 d-block"><strong>Expected Result:</strong> HIGH RISK - Phishing attempt detected!</small>
+                        <button id="loadExample" class="btn btn-primary btn-sm mt-3">
+                            <i class="fas fa-copy me-1"></i>Load This Example
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load example into form
+            const loadExampleBtn = document.getElementById('loadExample');
+            
+            loadExampleBtn.addEventListener('click', function() {
+                document.getElementById('senderEmail').value = "security@paypaI.com";
+                document.getElementById('senderDomain').value = "paypaI.com";
+                document.getElementById('emailSubject').value = "URGENT: Your account will be suspended in 24 hours";
+                document.getElementById('emailContent').value = "Dear customer, we detected suspicious activity. Click here immediately to verify your account or it will be permanently suspended.";
+                
+                // Scroll to form
+                document.getElementById('securityForm').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        document.getElementById('securityForm').addEventListener('submit', async function(e) { 
+            e.preventDefault(); 
+            const resultCard = document.getElementById('resultCard'); 
+            const resultsDiv = document.getElementById('analysisResults'); 
+            const submitBtn = document.querySelector('#securityForm button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            
+            // Show loading state
+            submitBtn.innerHTML = '<span class="loading-spinner me-2" style="width: 16px; height: 16px;"></span>Analyzing Security...';
+            submitBtn.disabled = true;
+            
+            resultsDiv.innerHTML = `
+                <div class="text-center py-4">
+                    <div class="loading-spinner mb-3" style="width: 30px; height: 30px;"></div>
+                    <p class="text-secondary">CrewAI security agents are analyzing your email...</p>
+                    <small class="text-light opacity-75">This may take 15-30 seconds for real AI analysis</small>
+                </div>
+            `;
+            resultCard.style.display = 'block';
+            
+            try {
+                // Get form data
+                const formData = {
+                    email_content: document.getElementById('emailContent').value,
+                    subject: document.getElementById('emailSubject').value,
+                    sender_email: document.getElementById('senderEmail').value,
+                    sender_domain: document.getElementById('senderDomain').value
+                };
+                
+                // Call the real CrewAI backend for email validation
+                const response = await fetch('/api/validate-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: formData.sender_email })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                
+                // Display AI analysis results
+                const analysis = result.analysis || {};
+                const rawAnalysis = analysis.raw_analysis || {};
+                const telemetry = analysis.telemetry || {};
+                
+                resultsDiv.innerHTML = `
+                    <p><strong>✅ AI Security Analysis Complete!</strong></p>
+                    <p><strong>Threat Level:</strong> ${analysis.risk_level || analysis.threat_level || '🟢 LOW'}</p>
+                    <p><strong>Risk Score:</strong> ${analysis.risk_score || rawAnalysis.risk_score || 'N/A'}/100</p>
+                    <p><strong>Status:</strong> ${result.status || 'completed'}</p>
+                    <p><strong>Findings:</strong> ${analysis.findings || rawAnalysis.summary || 'Analysis completed by CrewAI security agents'}</p>
+                    
+                    <hr style="border-color: rgba(255, 255, 255, 0.2);" class="my-3">
+                    <div class="glass-card p-3" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3);">
+                        <h6 class="text-success mb-2"><i class="fas fa-shield-alt me-2"></i>AI Security Recommendations:</h6>
+                        <div class="small text-light">
+                            ${analysis.recommendations && analysis.recommendations.length > 0 ? analysis.recommendations.join('<br>• ') : rawAnalysis.recommended_actions && rawAnalysis.recommended_actions.length > 0 ? rawAnalysis.recommended_actions.join('<br>• ') : 'Email security analysis completed by CrewAI agents'}
+                        </div>
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('Security analysis error:', error);
+                resultsDiv.innerHTML = `
+                    <div class="text-center py-4">
+                        <p class="text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Security Analysis Failed</p>
+                        <p class="text-light opacity-75 small">Error: ${error.message}</p>
+                        <p class="text-light opacity-75 small">Please check that the backend server is running and try again.</p>
+                    </div>
+                `;
+            } finally {
+                // Restore button
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+        document.getElementById('senderEmail').addEventListener('input', function(e) { const email = e.target.value; const domainField = document.getElementById('senderDomain'); if (email.includes('@')) { const domain = email.split('@')[1]; if (domain) { domainField.value = domain; } } });
+    </script>
+</body>
+</html>
+
