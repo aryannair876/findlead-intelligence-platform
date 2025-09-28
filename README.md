@@ -44,7 +44,7 @@ A production-ready, AI-native intelligence API with provider failover (Groq → 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/findlead-intelligence-platform.git
+   git clone https://github.com/aryannair876/findlead-intelligence-platform.git
    cd findlead-intelligence-platform
    ```
 
